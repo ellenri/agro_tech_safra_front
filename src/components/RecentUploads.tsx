@@ -56,9 +56,9 @@ const getTimeAgo = (date: Date): string => {
 
 export default function RecentUploads({ uploads, onViewAll }: RecentUploadsProps) {
   return (
-    <div className="bg-white rounded-lg border border-gray-200 p-6">
+    <div className="bg-white p-4">
       <div className="flex items-center justify-between mb-4">
-        <h3 className="text-lg font-semibold text-gray-900 flex items-center space-x-2">
+        <h3 className="text-base font-semibold text-gray-900 flex items-center space-x-2">
           <span>🕒</span>
           <span>Uploads Recentes</span>
         </h3>
@@ -76,32 +76,35 @@ export default function RecentUploads({ uploads, onViewAll }: RecentUploadsProps
           uploads.slice(0, 4).map((upload) => (
             <div
               key={upload.id}
-              className="flex items-start space-x-3 p-3 rounded-lg hover:bg-gray-50 transition-colors"
+              className="border-l-4 border-gray-200 pl-3 py-2"
+              style={{
+                borderLeftColor: upload.status === 'completed' ? '#22c55e' : 
+                                upload.status === 'processing' ? '#f59e0b' : 
+                                upload.status === 'error' ? '#ef4444' : '#6b7280'
+              }}
             >
-              <div className="flex-1 min-w-0">
-                <div className="flex items-center justify-between mb-1">
-                  <p className="text-sm font-medium text-gray-900 truncate">
-                    {upload.name}
-                  </p>
-                  <span
-                    className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(
-                      upload.status
-                    )}`}
-                  >
-                    {getStatusText(upload.status)}
-                  </span>
-                </div>
-                <div className="flex items-center justify-between text-xs text-gray-500">
-                  <span>
-                    {formatFileSize(upload.size)}
-                    {upload.recordCount && ` • ${formatRecordCount(upload.recordCount)}`}
-                  </span>
-                  <span>{getTimeAgo(upload.uploadDate)}</span>
-                </div>
-                {upload.status === 'error' && upload.errorMessage && (
-                  <p className="text-xs text-red-600 mt-1">{upload.errorMessage}</p>
-                )}
+              <div className="flex items-center justify-between mb-1">
+                <p className="text-sm font-medium text-gray-900 truncate">
+                  {upload.name}
+                </p>
+                <span
+                  className={`inline-flex items-center px-2 py-0.5 rounded text-xs font-medium ${getStatusColor(
+                    upload.status
+                  )}`}
+                >
+                  {getStatusText(upload.status)}
+                </span>
               </div>
+              <div className="text-xs text-gray-500 mb-1">
+                <div>
+                  {formatFileSize(upload.size)}
+                  {upload.recordCount && ` • ${formatRecordCount(upload.recordCount)}`}
+                </div>
+                <div>{getTimeAgo(upload.uploadDate)}</div>
+              </div>
+              {upload.status === 'error' && upload.errorMessage && (
+                <p className="text-xs text-red-600 mt-1">{upload.errorMessage}</p>
+              )}
             </div>
           ))
         )}

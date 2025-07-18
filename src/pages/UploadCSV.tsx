@@ -103,13 +103,20 @@ export default function UploadCSV() {
       <div className="flex-1 flex overflow-hidden">
         {/* Content Area */}
         <div className="flex-1 overflow-auto">
+          {/* Top Bar */}
+          <div className="flex justify-end p-4 border-b border-gray-200">
+            <div className="w-10 h-10 bg-gradient-to-r from-green-medium to-accent-500 rounded-full flex items-center justify-center">
+              <span className="text-white font-bold text-sm">U</span>
+            </div>
+          </div>
+          
           <div className="p-8">
             {/* Header */}
             <div className="mb-8">
-              <h1 className="text-3xl font-bold text-gray-900 mb-2">
+              <h1 className="text-2xl font-bold text-gray-900 mb-2">
                 Upload de Dados CSV
               </h1>
-              <p className="text-gray-600">
+              <p className="text-gray-600 text-sm">
                 Envie seus arquivos CSV para análise de pragas e obtenha recomendações personalizadas
               </p>
             </div>
@@ -144,10 +151,8 @@ export default function UploadCSV() {
         </div>
 
         {/* Right Sidebar */}
-        <div className="w-80 bg-white border-l border-gray-200 overflow-auto">
-          <div className="p-6">
-            <RecentUploads uploads={uploads} onViewAll={handleViewAllUploads} />
-          </div>
+        <div className="w-72 bg-white border-l border-gray-200 overflow-auto">
+          <RecentUploads uploads={uploads} onViewAll={handleViewAllUploads} />
         </div>
       </div>
     </div>

@@ -5,7 +5,7 @@ interface HelpSectionProps {
 
 export default function HelpSection({ onDownloadTemplate, onViewDocumentation }: HelpSectionProps) {
   return (
-    <div className="bg-primary-600 rounded-lg p-6 text-white">
+    <div className="bg-green-dark rounded-lg p-6 text-white">
       <div className="flex items-start space-x-4">
         <div className="flex-shrink-0">
           <div className="w-10 h-10 bg-white bg-opacity-20 rounded-full flex items-center justify-center">
@@ -16,13 +16,13 @@ export default function HelpSection({ onDownloadTemplate, onViewDocumentation }:
           <h3 className="text-lg font-semibold mb-2">
             Precisa de ajuda com o formato do arquivo?
           </h3>
-          <p className="text-primary-100 mb-4">
+          <p className="text-green-100 mb-4">
             Baixe nosso modelo de CSV ou consulte a documentação para estruturar seus dados corretamente.
           </p>
           <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-3">
             <button
               onClick={onDownloadTemplate}
-              className="bg-white text-primary-600 px-4 py-2 rounded-lg font-medium hover:bg-gray-50 transition-colors inline-flex items-center justify-center space-x-2"
+              className="bg-white text-green-dark px-4 py-2 rounded-lg font-medium hover:bg-gray-50 transition-colors inline-flex items-center justify-center space-x-2"
             >
               <svg
                 className="w-4 h-4"
@@ -41,7 +41,7 @@ export default function HelpSection({ onDownloadTemplate, onViewDocumentation }:
             </button>
             <button
               onClick={onViewDocumentation}
-              className="bg-primary-700 text-white px-4 py-2 rounded-lg font-medium hover:bg-primary-800 transition-colors inline-flex items-center justify-center space-x-2"
+              className="bg-green-hover text-white px-4 py-2 rounded-lg font-medium hover:bg-green-medium transition-colors inline-flex items-center justify-center space-x-2"
             >
               <svg
                 className="w-4 h-4"

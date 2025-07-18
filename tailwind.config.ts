@@ -9,16 +9,22 @@ export default {
     extend: {
       colors: {
         primary: {
-          50: '#f0f9f4',
-          100: '#dcf2e3',
-          200: '#bce5cc',
-          300: '#8dd1aa',
-          400: '#5bb682',
-          500: '#389e63',
-          600: '#2a7c4f',
-          700: '#226340',
-          800: '#1e4f36',
-          900: '#1a422e',
+          50: '#f0fdf4',
+          100: '#dcfce7',
+          200: '#bbf7d0',
+          300: '#86efac',
+          400: '#4ade80',
+          500: '#22c55e',
+          600: '#16a34a',
+          700: '#15803d',
+          800: '#166534',
+          900: '#14532d',
+        },
+        green: {
+          dark: '#1f3a2e', // Verde muito escuro da sidebar - corresponde ao mock
+          medium: '#2d5a3d',
+          light: '#4a7c59',
+          hover: '#2a5238',
         },
         accent: {
           50: '#fffbeb',
