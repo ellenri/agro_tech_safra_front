@@ -1,6 +1,8 @@
 import { useState, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import type { DragEvent, ChangeEvent } from 'react';
 import { validateFile, parseCSV, validateCSVStructure } from '../utils/csvValidation';
+import csvUploadService from '../services/csvUploadService';
 import type { UploadFile } from '../types';
 
 interface UploadAreaProps {
@@ -12,6 +14,7 @@ export default function UploadArea({ onFileUpload, onError }: UploadAreaProps) {
   const [isDragOver, setIsDragOver] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const navigate = useNavigate();
 
   const processFile = async (file: File) => {
     setIsProcessing(true);
@@ -24,7 +27,7 @@ export default function UploadArea({ onFileUpload, onError }: UploadAreaProps) {
         return;
       }
 
-      // Ler conteúdo do arquivo
+      // Ler conteúdo do arquivo para validação local
       const content = await file.text();
       
       // Parse e validação do CSV
@@ -37,7 +40,7 @@ export default function UploadArea({ onFileUpload, onError }: UploadAreaProps) {
           return;
         }
 
-        // Criar objeto de upload
+        // Criar objeto de upload inicial
         const uploadFile: UploadFile = {
           id: Date.now().toString(),
           name: file.name,
@@ -49,14 +52,42 @@ export default function UploadArea({ onFileUpload, onError }: UploadAreaProps) {
 
         onFileUpload?.(uploadFile);
 
-        // Simular processamento
-        setTimeout(() => {
-          const completedFile: UploadFile = {
+        // Fazer upload para a API
+        try {
+          const uploadResponse = await csvUploadService.uploadCSV(file);
+          
+          if (uploadResponse.success && uploadResponse.analiseIA) {
+            const completedFile: UploadFile = {
+              ...uploadFile,
+              status: 'completed',
+              recordCount: uploadResponse.recordCount,
+            };
+            onFileUpload?.(completedFile);
+            
+            // Navegar para a página de resultados com os dados da análise
+            setTimeout(() => {
+              navigate('/results', { 
+                state: { analysisData: uploadResponse.analiseIA } 
+              });
+            }, 1500);
+          } else {
+            const errorFile: UploadFile = {
+              ...uploadFile,
+              status: 'error',
+              errorMessage: uploadResponse.message,
+            };
+            onFileUpload?.(errorFile);
+            onError?.(uploadResponse.message);
+          }
+        } catch (apiError) {
+          const errorFile: UploadFile = {
             ...uploadFile,
-            status: 'completed',
+            status: 'error',
+            errorMessage: apiError instanceof Error ? apiError.message : 'Erro no upload',
           };
-          onFileUpload?.(completedFile);
-        }, 2000);
+          onFileUpload?.(errorFile);
+          onError?.(apiError instanceof Error ? apiError.message : 'Erro ao fazer upload para a API');
+        }
 
       } catch (error) {
         onError?.(`Erro ao processar arquivo CSV: ${error instanceof Error ? error.message : 'Erro desconhecido'}`);
@@ -136,9 +167,9 @@ export default function UploadArea({ onFileUpload, onError }: UploadAreaProps) {
         </div>
       ) : (
         <div className="flex flex-col items-center space-y-4">
-          <div className="w-20 h-20 bg-accent-500 rounded-full flex items-center justify-center shadow-lg">
+          <div className="w-20 h-20 bg-[#f59e0b] rounded-full flex items-center justify-center shadow-lg">
             <svg
-              className="w-10 h-10 text-white"
+              className="w-8 h-8 text-white"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -147,7 +178,7 @@ export default function UploadArea({ onFileUpload, onError }: UploadAreaProps) {
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"
-                d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
+                d="M12 15V3m0 0l-4 4m4-4l4 4M2 17l.621 2.485A2 2 0 004.561 21h14.878a2 2 0 001.94-1.515L22 17"
               />
             </svg>
           </div>
@@ -160,7 +191,7 @@ export default function UploadArea({ onFileUpload, onError }: UploadAreaProps) {
             </p>
             <button
               onClick={openFileDialog}
-              className="bg-green-dark text-white px-6 py-2.5 rounded-lg font-medium hover:bg-green-hover transition-colors inline-flex items-center space-x-2"
+              className="bg-[#3d6b4d] text-white px-6 py-2.5 rounded-lg font-medium hover:bg-[#4a7c59] transition-colors inline-flex items-center space-x-2"
             >
               <svg
                 className="w-4 h-4"

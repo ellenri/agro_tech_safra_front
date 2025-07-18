@@ -8,13 +8,7 @@ interface SidebarProps {
 const IconComponent = ({ icon }: { icon: string }) => {
   const iconProps = "w-4 h-4 text-current";
   
-  switch (icon) {
-    case 'dashboard':
-      return (
-        <svg className={iconProps} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-        </svg>
-      );
+  switch (icon) {    
     case 'upload':
       return (
         <svg className={iconProps} fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -46,30 +40,15 @@ const IconComponent = ({ icon }: { icon: string }) => {
 };
 
 const navigationItems: NavigationItem[] = [
-  { id: 'dashboard', label: 'Dashboard', icon: 'dashboard', path: '/dashboard' },
   { id: 'upload', label: 'Upload de Dados', icon: 'upload', path: '/upload', active: true },
-  { id: 'analysis', label: 'Análises', icon: 'search', path: '/analysis' },
-  { id: 'reports', label: 'Relatórios', icon: 'document', path: '/reports' },
-  { id: 'settings', label: 'Configurações', icon: 'settings', path: '/settings' },
+  { id: 'analysis', label: 'Análises', icon: 'search', path: '/analysis' },  
 ];
 
 export default function Sidebar({ activeItem = 'upload', onItemClick }: SidebarProps) {
   return (
-    <div className="w-52 bg-green-dark h-screen flex flex-col">
-      {/* Header */}
-      <div className="p-4">
-        <div className="flex items-center space-x-2">
-          <div className="w-6 h-6 bg-accent-500 rounded flex items-center justify-center">
-            <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M12 2L13.09 8.26L19 9L13.09 9.74L12 16L10.91 9.74L5 9L10.91 8.26L12 2Z"/>
-            </svg>
-          </div>
-          <span className="font-bold text-white text-sm">AgroTech Safra</span>
-        </div>
-      </div>
-
+    <div className="w-52 bg-[#5a8a6b] h-screen flex flex-col">
       {/* Navigation */}
-      <nav className="flex-1 px-4">
+      <nav className="flex-1 px-4 pt-4">
         <ul className="space-y-2">
           {navigationItems.map((item) => (
             <li key={item.id}>
@@ -77,8 +56,8 @@ export default function Sidebar({ activeItem = 'upload', onItemClick }: SidebarP
                 onClick={() => onItemClick?.(item)}
                 className={`w-full flex items-center space-x-3 px-3 py-3 rounded text-left transition-colors text-sm ${
                   activeItem === item.id
-                    ? 'bg-green-hover text-white font-medium'
-                    : 'text-green-100 hover:bg-green-hover hover:text-white'
+                    ? 'bg-[#3d6b4d] text-white font-medium'
+                    : 'bg-transparent text-white hover:bg-[#4a7c59] hover:text-white'
                 }`}
               >
                 <IconComponent icon={item.icon} />
@@ -92,12 +71,12 @@ export default function Sidebar({ activeItem = 'upload', onItemClick }: SidebarP
       {/* User Profile */}
       <div className="p-4">
         <div className="flex items-center space-x-3">
-          <div className="w-8 h-8 bg-gradient-to-r from-green-medium to-accent-500 rounded-full flex items-center justify-center">
+          <div className="w-8 h-8 bg-gradient-to-r from-[#2d5a3d] to-[#f59e0b] rounded-full flex items-center justify-center">
             <span className="text-white font-bold text-xs">U</span>
           </div>
           <div className="flex-1 min-w-0">
             <p className="text-xs font-medium text-white truncate">Usuário</p>
-            <p className="text-xs text-green-100 truncate">usuario@exemplo.com</p>
+            <p className="text-xs text-[#e5f2e8] truncate">usuario@exemplo.com</p>
           </div>
         </div>
       </div>

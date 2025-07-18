@@ -2,8 +2,10 @@ export default function FileSpecifications() {
   const specifications = [
     { label: 'Formato: CSV (.csv)', icon: '✓', color: 'text-green-600' },
     { label: 'Tamanho máximo: 50MB', icon: '✓', color: 'text-green-600' },
-    { label: 'Colunas obrigatórias: Data, Localização, Cultura', icon: '✓', color: 'text-green-600' },
+    { label: 'Colunas obrigatórias: Id, DataAvaliacao, Propriedade, NomeCultura', icon: '✓', color: 'text-green-600' },
     { label: 'Codificação: UTF-8', icon: '✓', color: 'text-green-600' },
+    { label: 'Datas no formato: YYYY-MM-DD', icon: '✓', color: 'text-green-600' },
+    { label: 'Campos booleanos: true/false', icon: '✓', color: 'text-green-600' },
   ];
 
   return (

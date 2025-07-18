@@ -21,10 +21,10 @@ export default {
           900: '#14532d',
         },
         green: {
-          dark: '#1f3a2e', // Verde muito escuro da sidebar - corresponde ao mock
-          medium: '#2d5a3d',
-          light: '#4a7c59',
-          hover: '#2a5238',
+          dark: '#0f2a1a', // Verde muito escuro da sidebar - corresponde ao mock
+          medium: '#1f3a2e',
+          light: '#2d5a3d',
+          hover: '#1a3324',
         },
         accent: {
           50: '#fffbeb',

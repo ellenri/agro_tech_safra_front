@@ -1,7 +1,7 @@
 import type { FileValidation, CSVData } from '../types';
 
 const MAX_FILE_SIZE = 50 * 1024 * 1024; // 50MB
-const REQUIRED_COLUMNS = ['Data', 'Localização', 'Cultura'];
+const REQUIRED_COLUMNS = ['Id', 'DataAvaliacao', 'Propriedade', 'NomeCultura'];
 
 export const validateFile = (file: File): FileValidation => {
   const errors: string[] = [];
